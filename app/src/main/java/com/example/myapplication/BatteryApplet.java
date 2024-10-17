@@ -5,28 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
-public class BatteryApplet {
+public class BatteryApplet extends  Applet{
 
     boolean isCharging;
     int batteryPercent;
 
-
-
-    String appName = "BatteryApp";
-
-    public BatteryApplet(String appName) {
-        this.appName = appName;
+    public BatteryApplet() {
+        super("BatteryApp", "config");
     }
 
-    public void createApp(String appName, Object config){
-        return;
-
-    }
-
-    public void listFunctionality(){
-        return;
-    }
+//    public void createApp(String appName, Object config){
+//        return;
+//    }
 
     public boolean status_call_plugged_in(){
 

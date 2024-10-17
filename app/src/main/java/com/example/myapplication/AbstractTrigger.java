@@ -9,7 +9,7 @@ import android.os.IBinder;
 
 public abstract class AbstractTrigger<T> extends Service {
     private String triggerName; //name of specific trigger
-    //private Applet app;
+    private Applet app;
     private T condition; //some condition with a specified type, automatically typecast
     //point getter to a new field
 
