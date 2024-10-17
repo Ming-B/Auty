@@ -16,16 +16,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        BatteryApplet batteryApplet = new BatteryApplet("batapp");
+        BatteryApplet batteryApplet = new BatteryApplet("BatteryApp");
 
-        BatteryTrigger batteryTrigger = new BatteryTrigger("batteryTrigger", 0.5f, batteryApplet);
+        BatteryTriggerPluggedIn batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
         // response class should be here called batteryResponse
 
         //Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
 
-        while(true) {
-            batteryWorkflow.handle();
-        }
+
         setContentView(R.layout.activity_main);
 
     }
