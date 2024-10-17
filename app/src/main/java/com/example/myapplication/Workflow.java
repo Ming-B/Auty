@@ -17,17 +17,16 @@ public class Workflow extends AppCompatActivity {
 private AbstractTrigger trigger;
 private AbstractResponse response;
 
-    public Workflow( AbstractResponse response, AbstractTrigger trigger) {
-
+    public Workflow(AbstractResponse response, AbstractTrigger trigger) {
         this.response = response;
         this.trigger = trigger;
-    }
+    } //this is fine
 
 
 
     public void handle( ){
 
-        String intentName = String.format("com.example.%s", trigger.getTriggerName());
+        String intentName = String.format("com.example.myapplication%s", trigger.getTriggerName());
 
         batteryReceiver = new BroadcastReceiver() {
             @Override
