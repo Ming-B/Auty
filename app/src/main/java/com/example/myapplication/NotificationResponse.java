@@ -13,7 +13,7 @@ public class NotificationResponse extends AbstractResponse {
         this.responseApp = (NotificationApplet) responseApp;
 
         this.responseApp.createNotificationChannel();
-        Log.d(this.responseApp.Tag, "Notification channel created for push notifications");
+        Log.d(this.responseApp.tag, "Notification channel created for push notifications");
 
     }
 
