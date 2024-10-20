@@ -11,7 +11,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)  // Instrumented test that runs on an emulator or device
+// testing runs on emulator or device
+@RunWith(AndroidJUnit4.class)  
 public class AbstractTriggerTest {
 
     private AbstractTrigger<Boolean> trigger;
@@ -24,7 +25,7 @@ public class AbstractTriggerTest {
 
         @Override
         public boolean handleService() {
-            return true;  // Simulate the trigger being activated
+            return true;  // Simulates trigger being activated
         }
     }
 
