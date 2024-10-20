@@ -22,25 +22,25 @@ public class BatteryTriggerPluggedInTest {
 
     @Test
     public void testHandleService_PluginStatusTrue() {
-        // Arrange: Simulate the battery being plugged in
+        // Simulate the battery being plugged in
         when(mockBatteryApplet.status_call_plugged_in()).thenReturn(true);
 
-        // Act: Call handleService
+        // Call handleService
         boolean result = batteryTriggerPluggedIn.handleService();
 
-        // Assert: Verify that handleService returns true
+        // Verify that handleService returns true
         assertTrue("The device should be plugged in", result);
     }
 
     @Test
     public void testHandleService_PluginStatusFalse() {
-        // Arrange: Simulate the battery not being plugged in
+        // Simulate the battery not being plugged in
         when(mockBatteryApplet.status_call_plugged_in()).thenReturn(false);
 
-        // Act: Call handleService
+        // Call handleService
         boolean result = batteryTriggerPluggedIn.handleService();
 
-        // Assert: Verify that handleService returns false
+        // Verify that handleService returns false
         assertFalse("The device should not be plugged in", result);
     }
 }
