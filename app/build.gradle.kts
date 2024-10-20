@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation("org.mongodb:mongodb-driver-sync:4.4.0")
+    implementation("org.mindrot:jbcrypt:0.4")
 
     implementation(libs.appcompat)
     implementation(libs.material)

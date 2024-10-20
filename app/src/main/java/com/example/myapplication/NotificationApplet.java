@@ -33,10 +33,15 @@ public class NotificationApplet extends Applet{
     public NotificationApplet(Context context) {
         super("NotificationApplet", "config");
         this.context = context;
-        this.ChannelID = "NotificationChannel";
-        this.tag = "NotificationService";
+        this.ChannelID = "DynamicServiceChannel";
+        this.tag = "DynamicService";
         createNotificationChannel();
     }
+
+//    private static final String CHANNEL_ID = "DynamicServiceChannel";
+//    private static final String TAG = "DynamicService";
+
+
 
     public void sendNotification(String responseName, String title, String contentText) {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)

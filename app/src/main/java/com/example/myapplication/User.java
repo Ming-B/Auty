@@ -1,17 +1,42 @@
 package com.example.myapplication;
 
+import androidx.annotation.Nullable;
+
+import org.bson.Document;
+import org.mindrot.jbcrypt.BCrypt;
+
 public class User {
 
-    private String userName;
-    private String password;
+    public String username;
+    public String password;
 
-    public User(String username, String password) {
-        this.userName = userName;
-        this.password = password;
+    public User(String username, String password, String  passwordRepeat) throws Exception {
+        this.username = username;
+
+        if (password.equals(passwordRepeat)) {
+            this.password = hashPassword(password);
+        } else {
+            throw new Exception("Passwords are not matching");
+        }
+
     }
 
-    //function write later for database
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+    public User(String username) {
+        this.username = username;
+    }
 
+
+    public static String hashPassword(String password){
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public static boolean checkPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
+    }
 
     public String getPassword() {
         return password;
@@ -21,13 +46,14 @@ public class User {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
 
 
 

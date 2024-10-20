@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Workflow extends AppCompatActivity {
     //instantiate a broadcast receiver
-    private BroadcastReceiver broadcastReceiverc; //should be in workflow
+    private BroadcastReceiver batteryReceiver; //should be in workflow
 
     private AbstractTrigger trigger;
     private AbstractResponse response;
@@ -28,7 +28,7 @@ public class Workflow extends AppCompatActivity {
 
         String intentName = String.format("com.example.myapplication.%s", trigger.getTriggerName());
 
-        broadcastReceiverc = new BroadcastReceiver() {
+        batteryReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
@@ -49,13 +49,13 @@ public class Workflow extends AppCompatActivity {
         String intentName = String.format("com.example.myapplication.%s", trigger.getTriggerName());
 
         IntentFilter iFilter = new IntentFilter(intentName);
-        registerReceiver(broadcastReceiverc, iFilter);
+        registerReceiver(batteryReceiver, iFilter);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        unregisterReceiver(broadcastReceiverc);
+        unregisterReceiver(batteryReceiver);
     }
 
 }

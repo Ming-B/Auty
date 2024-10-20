@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +25,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
+    Button logInButton;
+    Button registerButton;
+    Button deleteButton;
 
+    String loggedInUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +41,23 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        UserModel db = new UserModel(this);
+
         button = findViewById(R.id.btnNotifications);
 
+        logInButton = findViewById(R.id.button_login);
+        registerButton = findViewById(R.id.button_register);
+        deleteButton = findViewById(R.id.button_delete);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this,
-                        android.Manifest.permission.POST_NOTIFICATIONS) !=
-                        PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(MainActivity.this,
+                    android.Manifest.permission.POST_NOTIFICATIONS) !=
+                    PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions((MainActivity.this),
-                            new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
-                }
+                ActivityCompat.requestPermissions((MainActivity.this),
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
             }
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,63 +65,120 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // creation of applets
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity(db);
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity(db);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteActivity(db);
+            }
+        });
+
         NotificationApplet notificationApplet = new NotificationApplet(this);
         BatteryApplet batteryApplet = new BatteryApplet(this, notificationApplet);
 
-        // initialization of trigger class
         AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
-
-        // initialization of response class
+        // response class should be here called batteryResponse
         AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
                 "battery plugged in", notificationApplet);
-
-        // initialization of batteryWorkflow
         Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
 
     }
 
-//    public void makeNotification() {
-//        String channelID = "CHANNEL_ID_NOTIFICATION";
-//        NotificationCompat.Builder builder =
-//                new NotificationCompat.Builder(getApplicationContext(), channelID);
-//        builder.setSmallIcon(R.drawable.ic_notifications)
-//                .setContentTitle("Notification Title")
-//                .setContentText("Some description")
-//                .setAutoCancel(true)
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//        Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.putExtra("data", "Some value to be passed");
-//
-//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),
-//                0, intent, PendingIntent.FLAG_MUTABLE);
-//
-//        builder.setContentIntent(pendingIntent);
-//
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
-//            NotificationChannel notificationChannel =
-//                    notificationManager.getNotificationChannel(channelID);
-//            if(notificationChannel == null){
-//                int importance = NotificationManager.IMPORTANCE_HIGH;
-//                notificationChannel = new NotificationChannel(channelID,
-//                        "Some description", importance);
-//                notificationChannel.setLightColor(Color.GREEN);
-//                notificationChannel.enableVibration(true);
-//                notificationManager.createNotificationChannel(notificationChannel);
-//            }
-//
-//
-//        }
-//
-//        notificationManager.notify(0, builder.build());
-//    }
-//
-//
-//    public void disable(View view) {
-//    }
+    public boolean DeleteActivity(UserModel userModel) {
+        if (this.loggedInUser == null) {
+            System.out.println("No logged in user to delete");
+            return false;
+        }
+
+        userModel.deleteUser(new User(this.loggedInUser));
+        System.out.println("Deleted logged in user");
+        return true;
+    }
+
+    public boolean LoginActivity(UserModel userModel){
+
+        if (this.loggedInUser != null) {
+            System.out.println("User already logged in");
+            return false;
+        }
+
+        EditText usernameField = findViewById(R.id.username);
+        EditText passwordField = findViewById(R.id.password);
+
+        String username = usernameField.getText().toString();
+        String password = passwordField.getText().toString();
+
+        // Optionally, handle empty fields
+        if (username.isEmpty()) {
+            Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+
+        if (password.isEmpty()) {
+            Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+
+        User loggingUser = new User(username, password);
+
+        if (userModel.logIn(loggingUser)) {
+            this.loggedInUser = username;
+
+            Toast.makeText(this, "User logged in", Toast.LENGTH_SHORT).show();
+
+        }
+        System.out.println(String.format("User is logged in %s", this.loggedInUser));
+        return true;
+    }
+
+    public void RegisterActivity(UserModel userModel){
+        EditText usernameField = findViewById(R.id.register_username);
+        EditText passwordField = findViewById(R.id.register_password);
+        EditText repeatPasswordField = findViewById(R.id.repeat_password);
+
+        String username = usernameField.getText().toString();
+        String password = passwordField.getText().toString();
+        String repeatPassword = repeatPasswordField.getText().toString();
+
+        System.out.println(String.format("Username: %s; Password: %s; RepeatPassword: %s", username, password, repeatPassword));
+
+        // Optionally, handle empty fields
+        if (username.isEmpty()) {
+            Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+
+        if (password.isEmpty()) {
+            Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        if (repeatPassword.isEmpty()) {
+            Toast.makeText(this, "Repeat Password cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+
+        User registeringUser = null;
+        try {
+            registeringUser = new User(username, password, repeatPassword);
+        } catch (Exception e) {
+            System.out.println("Exception occured during the registration");
+            throw new RuntimeException(e);
+        }
+
+        if (userModel.register(registeringUser)) {
+            Toast.makeText(this, "User registered", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void disable(View view) {
+    }
 }
