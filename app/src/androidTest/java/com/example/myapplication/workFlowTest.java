@@ -11,7 +11,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-@RunWith(AndroidJUnit4.class)  // Use AndroidJUnit4 runner for instrumented tests
+// test runs on emulator or device
+@RunWith(AndroidJUnit4.class)  
 public class workFlowTest {
 
     private Workflow workflow;
@@ -20,7 +21,7 @@ public class workFlowTest {
 
     @Before
     public void setUp() {
-        // Set up context for the test (application context)
+        // Set up context for the test 
         Context context = ApplicationProvider.getApplicationContext();
 
         // Create mock trigger and response
@@ -52,7 +53,7 @@ public class workFlowTest {
 
     @Test
     public void testHandle() {
-        // Test the handle() method logic
+        
         workflow.handle();
 
         String expectedTriggerName = "com.example.BatteryTrigger";
@@ -65,8 +66,8 @@ public class workFlowTest {
     public void testOnStartAndOnStop() {
         // Since we're running an instrumented test, simulate calling onStart and onStop
         try {
-            workflow.onStart();  // Simulate Android's lifecycle onStart()
-            workflow.onStop();   // Simulate Android's lifecycle onStop()
+            workflow.onStart();  
+            workflow.onStop();   
         } catch (Exception e) {
             fail("onStart() or onStop() should not throw exceptions");
         }
