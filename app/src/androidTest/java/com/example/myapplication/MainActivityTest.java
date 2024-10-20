@@ -13,16 +13,17 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)  // Instrumented test that runs on an emulator or device
+// test runs on emulator or device
+@RunWith(AndroidJUnit4.class)  
 public class MainActivityTest {
 
     @Test
     public void testMainActivityLaunch() {
         // Launch the MainActivity
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-            // Verify that the activity is launched by checking if it's not null
+            // Verify that activity is launched by checking if it's not null
             scenario.onActivity(activity -> {
-                assertNotNull(activity);  // Ensure the activity is launched
+                assertNotNull(activity);  
             });
         }
     }
@@ -30,11 +31,11 @@ public class MainActivityTest {
     @Test
     public void testUIElementsDisplayed() {
         // Check if the TextView with ID 'hello' is displayed
-        onView(withId(R.id.hello))  // Using the correct ID from activity_main.xml
+        onView(withId(R.id.hello)) 
                 .check(matches(isDisplayed()));
 
         // Check if the Button with ID 'button' is displayed
-        onView(withId(R.id.button))  // Using the correct ID from activity_main.xml
+        onView(withId(R.id.button))  
                 .check(matches(isDisplayed()));
     }
 }
