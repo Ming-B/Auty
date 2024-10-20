@@ -9,8 +9,8 @@ public class UserTest {
     private User user1;
     private User user2;
 
-    // @Before ensures this method is run before test cases
-    // It sets up the initial state by creating instances of User class
+    
+    // Sets up the initial state by creating instances of User class
     @Before
     public void setUp() {
         user1 = new User("John Doe", "password123");
