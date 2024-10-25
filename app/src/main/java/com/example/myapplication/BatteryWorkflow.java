@@ -10,8 +10,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class BatteryWorkflow extends AppCompatActivity {
-    //something
+public class BatteryWorkflow extends Workflow {
+
+
+    public BatteryWorkflow(AbstractResponse response, AbstractTrigger trigger) {
+        super(response, trigger);
+    }
+
+
 
 }
 

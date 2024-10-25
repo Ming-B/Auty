@@ -7,9 +7,9 @@ public class BatteryTriggerPluggedIn extends AbstractTrigger<Float>{
         return batteryApplet.status_call_plugged_in();
     }
 
-    public BatteryTriggerPluggedIn(String triggerName, float condition, BatteryApplet batteryApplet){
+    public BatteryTriggerPluggedIn(String triggerName, float condition, Applet batteryApplet){
         super(triggerName, condition);
-        this.batteryApplet = batteryApplet;
+        this.batteryApplet = (BatteryApplet) batteryApplet;
     }
 
 }

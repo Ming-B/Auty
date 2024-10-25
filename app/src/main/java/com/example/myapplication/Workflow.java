@@ -11,11 +11,12 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Workflow extends AppCompatActivity {
- //instantiate a broadcast receiver
- private BroadcastReceiver batteryReceiver; //should be in workflow
+    //instantiate a broadcast receiver
+    private BroadcastReceiver batteryReceiver; //should be in workflow
 
-private AbstractTrigger trigger;
-private AbstractResponse response;
+    private AbstractTrigger trigger;
+    private AbstractResponse response;
+
 
     public Workflow(AbstractResponse response, AbstractTrigger trigger) {
         this.response = response;
@@ -23,18 +24,17 @@ private AbstractResponse response;
     } //this is fine
 
 
+    public void handle() {
 
-    public void handle( ){
-
-        String intentName = String.format("com.example.myapplication%s", trigger.getTriggerName());
+        String intentName = String.format("com.example.myapplication.%s", trigger.getTriggerName());
 
         batteryReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
                 if (intentName.equals(intent.getAction())) {
-//
                     System.out.println("Intent is activated. Responding!");
+                    Workflow.this.response.respond();
                 }
 
             }
@@ -42,19 +42,18 @@ private AbstractResponse response;
 
     }
 
-    //custom intent for what the trigger what have
-    //intent is the trigger
-
     // this on trigger
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        String intentName = String.format("com.example.myapplication.%s", trigger.getTriggerName());
+
+        IntentFilter iFilter = new IntentFilter(intentName);
         registerReceiver(batteryReceiver, iFilter);
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         unregisterReceiver(batteryReceiver);
     }
