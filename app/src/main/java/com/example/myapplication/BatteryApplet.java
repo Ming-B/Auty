@@ -33,7 +33,11 @@ public class BatteryApplet extends  Applet{
 //                isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING;
 //            }
 //        };
-        return isCharging;
+        if(isCharging) {
+            notificationApplet.sendNotification("Battery", "Charging", "Battery is charging");
+
+        }
+        return true;
     }
 
     public boolean status_call_low_battery(){
@@ -44,20 +48,27 @@ public class BatteryApplet extends  Applet{
 //                batteryPercent = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 //            }
 //        };
-        return batteryPercent < 10 && batteryPercent != -1;
+        if (batteryPercent < 20 && batteryPercent != -1) {
+            notificationApplet.sendNotification("Battery", "Low", "Battery is low");
+
+        }
+        return true;
     }
 
     public void updateBatteryStatus(boolean isCharging, int batteryPercent){
         this.isCharging = isCharging;
         this.batteryPercent = batteryPercent;
 
-        if(isCharging){
-            notificationApplet.sendNotification("Battery", "Charging", "Battery is charging");
+        status_call_plugged_in();
+        status_call_low_battery();
 
-        }
-        else if(batteryPercent < 20){
-            notificationApplet.sendNotification("Battery", "Low", "Battery is low");
-        }
+//        if(status_call_plugged_in()){
+//            notificationApplet.sendNotification("Battery", "Charging", "Battery is charging");
+//
+//        }
+//        else if(status_call_low_battery()){
+//            notificationApplet.sendNotification("Battery", "Low", "Battery is low");
+//        }
     }
 
     private void registerBatteryReceiver(Context context) {

@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
-        // response class should be here called batteryResponse
-        AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
-                "battery plugged in", notificationApplet);
-        Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
+//        AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
+//        // response class should be here called batteryResponse
+//        AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
+//                "battery plugged in", notificationApplet);
+//        Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
 
 
 
