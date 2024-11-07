@@ -179,6 +179,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void disable(View view) {
-    }
 }
