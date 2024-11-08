@@ -11,7 +11,7 @@ import java.util.List;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public class BatteryApplet extends  Applet{
+public class BatteryApplet extends Applet{
 
     boolean isCharging;
     int batteryPercent;
