@@ -26,21 +26,17 @@ public class WifiApplet extends Applet {
         this.notificationApplet = notificationApplet;
         this.wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
-        // Register the receiver to listen for changes in Wi-Fi connection state
         registerWifiReceiver(context);
 
-        // Initialize Wi-Fi status on creation
         updateWifiStatus();
     }
 
-    // Register a broadcast receiver to listen to Wi-Fi state changes
     private void registerWifiReceiver(Context context) {
         WifiStatusReceiver receiver = new WifiStatusReceiver(this);
         IntentFilter filter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         context.registerReceiver(receiver, filter);
     }
 
-    // Update the Wi-Fi connection status and send notification
     public void updateWifiStatus() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
