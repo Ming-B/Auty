@@ -88,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationApplet notificationApplet = new NotificationApplet(this);
         BatteryApplet batteryApplet = new BatteryApplet(this, notificationApplet);
+        WifiApplet wifiApplet = new WifiApplet(this, notificationApplet);
 
-        AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
-        // response class should be here called batteryResponse
-        AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
-                "battery plugged in", notificationApplet);
-        Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
+//        AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
+//        AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
+//                "battery plugged in", notificationApplet);
+//        Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
 
     }
 
