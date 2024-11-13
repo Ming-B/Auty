@@ -1,30 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnNotifications"
+        android:text="@string/make_notification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="disable"
-        android:text="Button"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="221dp" />
+        android:layout_height="wrap_content" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Username Field -->
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:inputType="text"
+                android:maxLength="255"
+                android:importantForAccessibility="yes"/>
+
+            <!-- Password Field -->
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLength="255"
+                android:importantForAccessibility="yes"/>
+
+            <!-- Button for Username and Password -->
+            <Button
+                android:id="@+id/button_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log In" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginVertical="16dp"/>
+
+
+            <!-- Button for Repeat Password -->
+
+            <EditText
+                android:id="@+id/register_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:inputType="text"
+                android:maxLength="255"
+                android:importantForAccessibility="yes"/>
+
+            <!-- Password Field -->
+            <EditText
+                android:id="@+id/register_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLength="255"
+                android:importantForAccessibility="yes"/>
+
+            <!-- Repeat Password Field -->
+            <EditText
+                android:id="@+id/repeat_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Repeat Password"
+                android:inputType="textPassword"
+                android:maxLength="255"
+                android:importantForAccessibility="yes"/>
+
+            <Button
+                android:id="@+id/button_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginVertical="16dp"/>
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete" />
+
+        </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,20 @@
- plugins {
-        alias(libs.plugins.android.application)
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace = "com.example.myapplication"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.example.myapplication"
+        minSdk = 26
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     android {
@@ -44,4 +59,18 @@
         androidTestImplementation(libs.espresso.core)
 
     }
+
+}
+
+dependencies {
+    implementation("org.mindrot:jbcrypt:0.4")
+
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+}
 
