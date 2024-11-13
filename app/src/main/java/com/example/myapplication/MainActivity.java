@@ -8,12 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
@@ -74,17 +77,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ArrayList<Workflow> workflows = getWorkflows();
+
+        for (Workflow workflow: workflows){
+            workflow.registerReceiver();
+        }
+
+    }
+
+    private @NonNull ArrayList<Workflow> getWorkflows() {
         NotificationResponse batteryChargingResponse = new NotificationResponse(this, "batteryChargingResponse");
         NotificationResponse batteryLowResponse = new NotificationResponse(this, "batteryLowResponse");
         NotificationResponse wifiConnectedResponse = new NotificationResponse(this, "wifiConnectedResponse");
+        NotificationResponse bluetoothConntectedResponse = new NotificationResponse(this, "bluetoothConnectedResponse");
 
         BatteryApplet batteryApplet = new BatteryApplet();
+        BluetoothApplet bluetoothApplet = new BluetoothApplet();
         WifiApplet wifiApplet = new WifiApplet(this);
 
         WifiWorkflow wifiWorkflow = new WifiWorkflow(this, wifiApplet, wifiConnectedResponse);
         BatteryPluggedInWorkflow batteryPluggedInWorkflow = new BatteryPluggedInWorkflow(this, batteryApplet, batteryChargingResponse);
         BatteryLowWorkflow batteryLowWorkflow = new BatteryLowWorkflow(this, batteryApplet, batteryLowResponse);
+        BluetoothConnectedWorkflow bluetoothConnectedWorkflow = new BluetoothConnectedWorkflow(this, bluetoothApplet, bluetoothConntectedResponse);
 
+        ArrayList<Workflow> workflows = new ArrayList<>();
+
+        workflows.add(wifiWorkflow);
+        workflows.add(batteryPluggedInWorkflow);
+        workflows.add(batteryLowWorkflow);
+        workflows.add(bluetoothConnectedWorkflow);
+        return workflows;
     }
 
     public boolean DeleteActivity(UserModel userModel) {

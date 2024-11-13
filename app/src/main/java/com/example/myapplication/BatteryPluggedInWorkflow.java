@@ -21,7 +21,7 @@ public class BatteryPluggedInWorkflow extends Workflow {
         this.app = batteryApplet;
         this.response = (NotificationResponse) response;
 
-        this.registerReceiver();
+//        this.registerReceiver();
     }
 
     @Override

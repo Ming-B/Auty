@@ -26,7 +26,7 @@ public class WifiWorkflow extends Workflow {
         this.response = (NotificationResponse) notificationResponse;
         this.app = wifiApplet;
 
-        this.registerReceiver();
+//        this.registerReceiver();
     }
 
     @Override

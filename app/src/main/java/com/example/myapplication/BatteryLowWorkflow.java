@@ -19,7 +19,7 @@ public class BatteryLowWorkflow extends  Workflow{
         this.app = batteryApplet;
         this.response = (NotificationResponse) notificationApplet;
 
-        this.registerReceiver();
+//        this.registerReceiver();
     }
 
     @Override
