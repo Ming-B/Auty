@@ -30,18 +30,15 @@ public class NotificationApplet extends Applet{
     private final Context context;
     private static final int PERMISSION_REQUEST_CODE = 123;
 
-    public NotificationApplet(Context context) {
+    public NotificationApplet(Context context, String channelID, String tag) {
         super("NotificationApplet", "config");
         this.context = context;
-        this.ChannelID = "DynamicServiceChannel";
-        this.tag = "DynamicService";
-        createNotificationChannel();
+//        this.ChannelID = "DynamicServiceChannel";
+        this.ChannelID = channelID;
+//        this.tag = "DynamicService";
+        this.tag = tag;
+
     }
-
-//    private static final String CHANNEL_ID = "DynamicServiceChannel";
-//    private static final String TAG = "DynamicService";
-
-
 
     public void sendNotification(String responseName, String title, String contentText) {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)

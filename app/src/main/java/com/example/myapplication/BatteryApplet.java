@@ -1,69 +1,34 @@
 package com.example.myapplication;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.BatteryManager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import androidx.annotation.NonNull;
 
-public class BatteryApplet extends  Applet{
 
-    boolean isCharging;
-    int batteryPercent;
-    private NotificationApplet notificationApplet;
+public class BatteryApplet extends Applet {
 
-    public BatteryApplet(Context context, NotificationApplet notificationApplet) {
+
+    public BatteryApplet() {
         super("BatteryApp", "config");
-        this.notificationApplet = notificationApplet;
-        registerBatteryReceiver(context);
     }
 
+    public boolean status_call_plugged_in(@NonNull Intent intent){
+        int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 
-    public boolean status_call_plugged_in(){
+        return status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                status == BatteryManager.BATTERY_STATUS_FULL;
 
-//        BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-//                isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING;
-//            }
-//        };
-        return isCharging;
     }
 
-    public boolean status_call_low_battery(){
+    public boolean status_call_low_battery(@NonNull Intent intent){
+        int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+        int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+        int batteryPercent = (level * 100)/scale;
 
-//        BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                batteryPercent = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-//            }
-//        };
         return batteryPercent < 10 && batteryPercent != -1;
     }
 
-    public void updateBatteryStatus(boolean isCharging, int batteryPercent){
-        this.isCharging = isCharging;
-        this.batteryPercent = batteryPercent;
-
-        if(isCharging){
-            notificationApplet.sendNotification("Battery", "Charging", "Battery is charging");
-
-        }
-        else if(batteryPercent < 20){
-            notificationApplet.sendNotification("Battery", "Low", "Battery is low");
-        }
-    }
-
-    private void registerBatteryReceiver(Context context) {
-        BatteryStatusReceiver receiver = new BatteryStatusReceiver(this);
-        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        context.registerReceiver(receiver, filter);
-    }
 
 }

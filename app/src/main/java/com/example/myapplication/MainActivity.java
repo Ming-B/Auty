@@ -1,31 +1,22 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
@@ -87,14 +78,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        NotificationApplet notificationApplet = new NotificationApplet(this);
-        BatteryApplet batteryApplet = new BatteryApplet(this, notificationApplet);
+        ArrayList<Workflow> workflows = getWorkflows();
 
-        AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
-        // response class should be here called batteryResponse
-        AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
-                "battery plugged in", notificationApplet);
-        Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
+        for (Workflow workflow: workflows){
+            workflow.registerReceiver();
+        }
 
         WorkflowConfig workflowConfig = new WorkflowConfig("batteryWorkflow", "BatteryTrigger", "BatteryResponse", true, "response");
         if (wDb.addWorkflow(workflowConfig)) {
@@ -106,6 +94,31 @@ public class MainActivity extends AppCompatActivity {
         WorkflowConfig obtainedWF = wDb.getWorkflow("batteryWorkflow");
         System.out.printf("Obtained WF: %s\n", obtainedWF.toString() );
 
+    }
+
+    private @NonNull ArrayList<Workflow> getWorkflows() {
+        NotificationResponse batteryChargingResponse = new NotificationResponse(this, "batteryChargingResponse");
+        NotificationResponse batteryLowResponse = new NotificationResponse(this, "batteryLowResponse");
+        NotificationResponse wifiConnectedResponse = new NotificationResponse(this, "wifiConnectedResponse");
+        NotificationResponse bluetoothConntectedResponse = new NotificationResponse(this, "bluetoothConnectedResponse");
+
+        BatteryApplet batteryApplet = new BatteryApplet();
+        BluetoothApplet bluetoothApplet = new BluetoothApplet();
+        WifiApplet wifiApplet = new WifiApplet(this);
+
+        WifiWorkflow wifiWorkflow = new WifiWorkflow(this, wifiApplet, wifiConnectedResponse);
+        BatteryPluggedInWorkflow batteryPluggedInWorkflow = new BatteryPluggedInWorkflow(this, batteryApplet, batteryChargingResponse);
+        BatteryLowWorkflow batteryLowWorkflow = new BatteryLowWorkflow(this, batteryApplet, batteryLowResponse);
+        BluetoothConnectedWorkflow bluetoothConnectedWorkflow = new BluetoothConnectedWorkflow(this, bluetoothApplet, bluetoothConntectedResponse);
+
+        ArrayList<Workflow> workflows = new ArrayList<>();
+    
+
+        workflows.add(wifiWorkflow);
+        workflows.add(batteryPluggedInWorkflow);
+        workflows.add(batteryLowWorkflow);
+        workflows.add(bluetoothConnectedWorkflow);
+        return workflows;
     }
 
     public boolean DeleteActivity(UserModel userModel) {
@@ -190,6 +203,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void disable(View view) {
-    }
 }

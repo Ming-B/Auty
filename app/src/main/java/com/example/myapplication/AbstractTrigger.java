@@ -7,12 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
-public abstract class AbstractTrigger<T> extends Service {
-    private String triggerName; //name of specific trigger
-    private Applet app;
-    private T condition; //some condition with a specified type, automatically typecast
-    //point getter to a new field
-
+public abstract class AbstractTrigger extends BroadcastReceiver {
+    protected String triggerName; //name of specific trigger
+    protected Workflow workflow;
 
     public String getTriggerName() {
         return triggerName;
@@ -22,31 +19,9 @@ public abstract class AbstractTrigger<T> extends Service {
         this.triggerName = triggerName;
     }
 
-    public AbstractTrigger(String triggerName, T condition ){
+    public AbstractTrigger(String triggerName, Workflow workflow){
         this.triggerName = triggerName;
-        this.condition = condition;
+        this.workflow = workflow;
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startID){
-        boolean resultValue = this.handleService();
-
-        if (resultValue) {
-            Intent broadcastIntent = new Intent(String.format("com.example.%s", this.triggerName));
-
-            broadcastIntent.putExtra("result", resultValue);
-
-            sendBroadcast(broadcastIntent);
-        }
-//        stopSelf();
-
-        return START_NOT_STICKY;
-    }
-    // type is optional
-    public abstract boolean handleService();
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
 }

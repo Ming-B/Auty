@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.Nullable;
 
-import org.bson.Document;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 public class User {
