@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         BluetoothConnectedWorkflow bluetoothConnectedWorkflow = new BluetoothConnectedWorkflow(this, bluetoothApplet, bluetoothConntectedResponse);
 
         ArrayList<Workflow> workflows = new ArrayList<>();
+    
 
         workflows.add(wifiWorkflow);
         workflows.add(batteryPluggedInWorkflow);

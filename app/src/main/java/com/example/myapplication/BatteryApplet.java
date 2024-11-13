@@ -19,6 +19,7 @@ public class BatteryApplet extends Applet {
 
         return status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
+
     }
 
     public boolean status_call_low_battery(@NonNull Intent intent){
