@@ -1,6 +1,5 @@
-package com.example.myapplication;
+package com.example.myapplication.workflows;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -11,6 +10,11 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 
 import androidx.annotation.Nullable;
+
+import com.example.myapplication.applets.WifiApplet;
+import com.example.myapplication.responses.AbstractResponse;
+import com.example.myapplication.responses.NotificationResponse;
+import com.example.myapplication.triggers.WifiTrigger;
 
 public class WifiWorkflow extends Workflow {
 

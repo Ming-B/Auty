@@ -1,6 +1,4 @@
-package com.example.myapplication;
-
-import androidx.annotation.Nullable;
+package com.example.myapplication.models;
 
 
 import org.mindrot.jbcrypt.BCrypt;

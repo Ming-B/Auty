@@ -1,18 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.applets;
 
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothHeadset;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.bluetooth.BluetoothManager;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.os.Build;
-import android.bluetooth.BluetoothAdapter;
-import android.util.Log;
 
 public class BluetoothApplet extends Applet {
 

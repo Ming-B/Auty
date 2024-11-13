@@ -1,23 +1,17 @@
-package com.example.myapplication;
+package com.example.myapplication.workflows;
 
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
-import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.applets.Applet;
+import com.example.myapplication.responses.AbstractResponse;
 
 public abstract class Workflow {
-    //instantiate a broadcast receiver
-
 
     protected AbstractResponse response;
     protected Applet app;
-
 
     public Workflow(Applet app, AbstractResponse response) {
         this.app = app;

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.workflows;
 
 
 import android.content.Context;
@@ -6,6 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.annotation.Nullable;
+
+import com.example.myapplication.applets.BatteryApplet;
+import com.example.myapplication.responses.AbstractResponse;
+import com.example.myapplication.responses.NotificationResponse;
+import com.example.myapplication.triggers.BatteryTrigger;
 
 
 public class BatteryPluggedInWorkflow extends Workflow {

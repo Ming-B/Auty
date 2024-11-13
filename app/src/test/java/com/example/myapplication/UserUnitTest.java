@@ -3,6 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import com.example.myapplication.models.User;
+
 public class UserUnitTest {
     // declaring two  instances of the user class for testing
     private User user1;

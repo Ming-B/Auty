@@ -1,6 +1,5 @@
-package com.example.myapplication;
+package com.example.myapplication.applets;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.responses;
 
 
 public abstract class AbstractResponse {

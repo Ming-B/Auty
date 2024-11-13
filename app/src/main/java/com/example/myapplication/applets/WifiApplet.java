@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.applets;
 
 
 import android.content.Context;
@@ -10,13 +10,11 @@ public class WifiApplet extends Applet {
 
     private WifiManager wifiManager;
 
-
     public WifiApplet(Context context) {
         super("WifiApp", "config");
 
         this.wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     }
-
 
     public String getWifiSSID() {
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();

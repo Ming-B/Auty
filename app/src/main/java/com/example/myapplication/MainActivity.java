@@ -16,6 +16,20 @@ import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.myapplication.applets.BatteryApplet;
+import com.example.myapplication.applets.BluetoothApplet;
+import com.example.myapplication.applets.WifiApplet;
+import com.example.myapplication.models.User;
+import com.example.myapplication.models.UserModel;
+import com.example.myapplication.models.WorkflowConfig;
+import com.example.myapplication.models.WorkflowModel;
+import com.example.myapplication.responses.NotificationResponse;
+import com.example.myapplication.workflows.BatteryLowWorkflow;
+import com.example.myapplication.workflows.BatteryPluggedInWorkflow;
+import com.example.myapplication.workflows.BluetoothConnectedWorkflow;
+import com.example.myapplication.workflows.WifiWorkflow;
+import com.example.myapplication.workflows.Workflow;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
