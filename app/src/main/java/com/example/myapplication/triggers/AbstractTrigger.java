@@ -1,11 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.triggers;
 
-import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.IBinder;
+
+import com.example.myapplication.workflows.Workflow;
 
 public abstract class AbstractTrigger extends BroadcastReceiver {
     protected String triggerName; //name of specific trigger

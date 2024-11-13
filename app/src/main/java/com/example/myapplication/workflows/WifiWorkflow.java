@@ -1,6 +1,5 @@
-package com.example.myapplication;
+package com.example.myapplication.workflows;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +11,11 @@ import android.os.Build;
 
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.applets.WifiApplet;
+import com.example.myapplication.responses.AbstractResponse;
+import com.example.myapplication.responses.NotificationResponse;
+import com.example.myapplication.triggers.WifiTrigger;
+
 public class WifiWorkflow extends Workflow {
 
     private WifiTrigger wifiTrigger;
@@ -21,7 +25,7 @@ public class WifiWorkflow extends Workflow {
     private Context context;
 
     public WifiWorkflow(Context context, WifiApplet wifiApplet, AbstractResponse notificationResponse) {
-        super(wifiApplet, notificationResponse);
+        super("wifiWorkflow", wifiApplet, notificationResponse);
         this.context = context;
         this.response = (NotificationResponse) notificationResponse;
         this.app = wifiApplet;

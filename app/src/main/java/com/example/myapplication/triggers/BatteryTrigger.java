@@ -1,7 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.triggers;
 
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.myapplication.workflows.Workflow;
 
 
 public class BatteryTrigger extends AbstractTrigger {

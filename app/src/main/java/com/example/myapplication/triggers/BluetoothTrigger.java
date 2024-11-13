@@ -1,9 +1,11 @@
-package com.example.myapplication;
+package com.example.myapplication.triggers;
 
 import android.content.Context;
 import android.content.Intent;
 
-public class BluetoothTrigger extends AbstractTrigger{
+import com.example.myapplication.workflows.Workflow;
+
+public class BluetoothTrigger extends AbstractTrigger {
     public BluetoothTrigger(Workflow workflow) {
         super("bluetoothTrigger", workflow);
     }

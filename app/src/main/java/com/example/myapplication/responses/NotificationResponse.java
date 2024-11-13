@@ -1,8 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.responses;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
+
+import com.example.myapplication.applets.NotificationApplet;
 
 public class NotificationResponse extends AbstractResponse {
 

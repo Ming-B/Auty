@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.workflows;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -8,7 +8,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import kotlin.jvm.Volatile;
+import com.example.myapplication.applets.Applet;
+import com.example.myapplication.applets.BluetoothApplet;
+import com.example.myapplication.responses.AbstractResponse;
+import com.example.myapplication.responses.NotificationResponse;
+import com.example.myapplication.triggers.BluetoothTrigger;
 
 public class BluetoothConnectedWorkflow extends Workflow {
 
@@ -19,8 +23,8 @@ public class BluetoothConnectedWorkflow extends Workflow {
     private Context context;
 
 
-    public BluetoothConnectedWorkflow( Context context, Applet applet, AbstractResponse response) {
-        super(applet, response);
+    public BluetoothConnectedWorkflow(Context context, Applet applet, AbstractResponse response) {
+        super("bluetoothConnectedWorkflow",applet, response);
         this.context = context;
         this.response = (NotificationResponse) response;
         this.app = (BluetoothApplet) applet;

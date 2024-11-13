@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.workflows;
 
 
 import android.content.Context;
@@ -6,6 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.annotation.Nullable;
+
+import com.example.myapplication.applets.BatteryApplet;
+import com.example.myapplication.responses.AbstractResponse;
+import com.example.myapplication.responses.NotificationResponse;
+import com.example.myapplication.triggers.BatteryTrigger;
 
 
 public class BatteryPluggedInWorkflow extends Workflow {
@@ -16,7 +21,7 @@ public class BatteryPluggedInWorkflow extends Workflow {
     private BatteryApplet app;
 
     public BatteryPluggedInWorkflow(Context context, BatteryApplet batteryApplet, AbstractResponse response) {
-        super(batteryApplet, response);
+        super("batteryPluggedInWorkflow", batteryApplet, response);
         this.context = context;
         this.app = batteryApplet;
         this.response = (NotificationResponse) response;
