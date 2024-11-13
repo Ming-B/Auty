@@ -3,13 +3,13 @@ package com.example.myapplication;
 
 public abstract class AbstractResponse {
     String responseName;
-    String message;
 
-    public AbstractResponse(String responseName, String message){
+
+    public AbstractResponse(String responseName){
         this.responseName = responseName;
-        this.message = message;
+
     }
 
-    public abstract void respond();
+    public abstract void respond(String message);
 
 }
