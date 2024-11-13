@@ -8,54 +8,25 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Workflow extends AppCompatActivity {
+public abstract class Workflow {
     //instantiate a broadcast receiver
-    private BroadcastReceiver batteryReceiver; //should be in workflow
-
-    private AbstractTrigger trigger;
-    private AbstractResponse response;
 
 
-    public Workflow(AbstractResponse response, AbstractTrigger trigger) {
+    protected AbstractResponse response;
+    protected Applet app;
+
+
+    public Workflow(Applet app, AbstractResponse response) {
+        this.app = app;
         this.response = response;
-        this.trigger = trigger;
+
     } //this is fine
 
+    public abstract void registerReceiver();
+    public abstract void handle(@Nullable Intent intent);
 
-    public void handle() {
-
-        String intentName = String.format("com.example.myapplication.%s", trigger.getTriggerName());
-
-        batteryReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                if (intentName.equals(intent.getAction())) {
-                    System.out.println("Intent is activated. Responding!");
-                    Workflow.this.response.respond();
-                }
-
-            }
-        };
-
-    }
-
-    // this on trigger
-    @Override
-    public void onStart() {
-        super.onStart();
-        String intentName = String.format("com.example.myapplication.%s", trigger.getTriggerName());
-
-        IntentFilter iFilter = new IntentFilter(intentName);
-        registerReceiver(batteryReceiver, iFilter);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        unregisterReceiver(batteryReceiver);
-    }
 
 }

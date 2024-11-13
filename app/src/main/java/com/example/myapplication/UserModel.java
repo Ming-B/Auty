@@ -146,24 +146,24 @@ public class UserModel extends SQLiteOpenHelper {
     }
 
     // UNTESTED
-//    public boolean resetPassword(User user) {
-//        String username = user.getUsername();
-//
-//        User checkUser = getUser(username);
-//        if (checkUser == null) {
-//            return false;
-//        }
-//
-//        String hashedPassword = User.hashPassword(user.getPassword());
-//
-//        user.setPassword(hashedPassword);
-//
-//        if (updateUser(user) == 0) {
-//            System.out.println("Failed to reset user password");
-//            return false;
-//        } else {
-//            System.out.println("Reset the user password");
-//            return true;
-//        }
-//    }
+    public boolean resetPassword(User user) {
+        String username = user.getUsername();
+
+        User checkUser = getUser(username);
+        if (checkUser == null) {
+            return false;
+        }
+
+        String hashedPassword = User.hashPassword(user.getPassword());
+
+        user.setPassword(hashedPassword);
+
+        if (updateUser(user) == 0) {
+            System.out.println("Failed to reset user password");
+            return false;
+        } else {
+            System.out.println("Reset the user password");
+            return true;
+        }
+    }
 }

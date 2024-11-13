@@ -1,31 +1,22 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
@@ -86,15 +77,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        NotificationApplet notificationApplet = new NotificationApplet(this);
+        ArrayList<Workflow> workflows = getWorkflows();
 
-        BatteryApplet batteryApplet = new BatteryApplet(this, notificationApplet);
-        WifiApplet wifiApplet = new WifiApplet(this, notificationApplet);
+        for (Workflow workflow: workflows){
+            workflow.registerReceiver();
+        }
 
-        System.out.println("Starting applet");
-        BluetoothApplet bluetoothApplet = new BluetoothApplet(this, notificationApplet);
+    }
 
+    private @NonNull ArrayList<Workflow> getWorkflows() {
+        NotificationResponse batteryChargingResponse = new NotificationResponse(this, "batteryChargingResponse");
+        NotificationResponse batteryLowResponse = new NotificationResponse(this, "batteryLowResponse");
+        NotificationResponse wifiConnectedResponse = new NotificationResponse(this, "wifiConnectedResponse");
+        NotificationResponse bluetoothConntectedResponse = new NotificationResponse(this, "bluetoothConnectedResponse");
 
+        BatteryApplet batteryApplet = new BatteryApplet();
+        BluetoothApplet bluetoothApplet = new BluetoothApplet();
+        WifiApplet wifiApplet = new WifiApplet(this);
+
+        WifiWorkflow wifiWorkflow = new WifiWorkflow(this, wifiApplet, wifiConnectedResponse);
+        BatteryPluggedInWorkflow batteryPluggedInWorkflow = new BatteryPluggedInWorkflow(this, batteryApplet, batteryChargingResponse);
+        BatteryLowWorkflow batteryLowWorkflow = new BatteryLowWorkflow(this, batteryApplet, batteryLowResponse);
+        BluetoothConnectedWorkflow bluetoothConnectedWorkflow = new BluetoothConnectedWorkflow(this, bluetoothApplet, bluetoothConntectedResponse);
+
+        ArrayList<Workflow> workflows = new ArrayList<>();
+    
+
+        workflows.add(wifiWorkflow);
+        workflows.add(batteryPluggedInWorkflow);
+        workflows.add(batteryLowWorkflow);
+        workflows.add(bluetoothConnectedWorkflow);
+        return workflows;
     }
 
     public boolean DeleteActivity(UserModel userModel) {
