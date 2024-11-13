@@ -43,19 +43,6 @@ public class BluetoothApplet extends Applet {
 
     }
 
-    public void updateBluetoothStatus() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            isConnected = isConnected;
-            if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(intent.getAction())) {
-                notificationApplet.sendNotification("Bluetooth", "Connected", "Bluetooth is connected");
-            } else {
-                notificationApplet.sendNotification("Bluetooth", "Disconnected", "Bluetooth is disconnected");
-            }
-
-
-        }
-    }
-
 
 
 
@@ -70,8 +57,15 @@ public class BluetoothApplet extends Applet {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
-            updateBluetoothStatus();
+            if(BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)){
+                bluetoothApplet.notificationApplet.sendNotification("Bluetooth", "Connected", "Bluetooth is connected");
+            }
+            else if(BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)){
+                bluetoothApplet.notificationApplet.sendNotification("Bluetooth", "Disconnected", "Bluetooth is disconnected");
+            }
+
 
         }
 
