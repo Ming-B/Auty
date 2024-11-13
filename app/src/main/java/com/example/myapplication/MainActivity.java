@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         UserModel db = new UserModel(this);
+        WorkflowModel wDb = new WorkflowModel(this);
 
         button = findViewById(R.id.btnNotifications);
 
@@ -82,6 +83,16 @@ public class MainActivity extends AppCompatActivity {
         for (Workflow workflow: workflows){
             workflow.registerReceiver();
         }
+
+        WorkflowConfig workflowConfig = new WorkflowConfig("batteryWorkflow", "BatteryTrigger", "BatteryResponse", true, "response");
+        if (wDb.addWorkflow(workflowConfig)) {
+            System.out.println("Succesfully added workflow to DB");
+        } else {
+            System.out.println("Failed to add workflow to DB");
+        }
+
+        WorkflowConfig obtainedWF = wDb.getWorkflow("batteryWorkflow");
+        System.out.printf("Obtained WF: %s\n", obtainedWF.toString() );
 
     }
 

@@ -145,7 +145,6 @@ public class UserModel extends SQLiteOpenHelper {
         }
     }
 
-    // UNTESTED
     public boolean resetPassword(User user) {
         String username = user.getUsername();
 
