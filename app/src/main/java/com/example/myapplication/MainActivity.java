@@ -87,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         NotificationApplet notificationApplet = new NotificationApplet(this);
+
         BatteryApplet batteryApplet = new BatteryApplet(this, notificationApplet);
         WifiApplet wifiApplet = new WifiApplet(this, notificationApplet);
 
-//        AbstractTrigger<Float> batteryTrigger = new BatteryTriggerPluggedIn("batteryTrigger", 0.5f, batteryApplet);
-//        AbstractResponse batteryResponse = new NotificationResponse("batteryResponse",
-//                "battery plugged in", notificationApplet);
-//        Workflow batteryWorkflow = new Workflow(batteryResponse, batteryTrigger);
+        System.out.println("Starting applet");
+        BluetoothApplet bluetoothApplet = new BluetoothApplet(this, notificationApplet);
+
 
     }
 

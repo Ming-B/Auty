@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -13,6 +14,7 @@ public abstract class Applet {
 
     public Applet(String appName, Object config){
         this.appName = appName;
+        Log.d("App","Applet constructor");
     }
 
     public ArrayList<String> listFunctionality(){
