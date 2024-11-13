@@ -24,7 +24,7 @@ public class BluetoothConnectedWorkflow extends Workflow {
 
 
     public BluetoothConnectedWorkflow(Context context, Applet applet, AbstractResponse response) {
-        super(applet, response);
+        super("bluetoothConnectedWorkflow",applet, response);
         this.context = context;
         this.response = (NotificationResponse) response;
         this.app = (BluetoothApplet) applet;

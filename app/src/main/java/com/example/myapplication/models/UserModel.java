@@ -2,18 +2,26 @@ package com.example.myapplication.models;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class UserModel extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "AUTY";
+    private static final int DATABASE_VERSION = 3;
+    private static final String DATABASE_NAME = "AUTY1";
     private static final String TABLE_USERS = "users";
     private static final String KEY_ID = "id";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
+
+    private static final String CREATE_TABLE =
+            "CREATE TABLE " + TABLE_USERS + " (" +
+                    KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    KEY_USERNAME + " TEXT, " +
+                    KEY_PASSWORD + " TEXT);";
 
     public UserModel(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,19 +30,21 @@ public class UserModel extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_USER_TABLE = String.format("CREATE TABLE %s (" +
-                "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "%s VARCHAR(255) NOT NULL, " +
-                "%s VARCHAR(255) NOT NULL" +
-                ")", TABLE_USERS, KEY_ID, KEY_USERNAME, KEY_PASSWORD);
-
-        db.execSQL(CREATE_USER_TABLE);
+//        String CREATE_USER_TABLE = String.format("CREATE TABLE %s (" +
+//                "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                "%s VARCHAR(255) NOT NULL, " +
+//                "%s VARCHAR(255) NOT NULL" +
+//                ")", TABLE_USERS, KEY_ID, KEY_USERNAME, KEY_PASSWORD);
+//
+//        db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_TABLE);
+        Log.d("Auth", "Creating user table");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String DROP_TABLE = String.format("DROP TABLE IF EXISTS %s", TABLE_USERS);
-
         db.execSQL(DROP_TABLE);
 
         onCreate(db);
@@ -90,6 +100,33 @@ public class UserModel extends SQLiteOpenHelper {
 
         cursor.close();
         return user;
+    }
+
+    public Integer getUserID(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(TABLE_USERS,
+                new String[] { KEY_ID, KEY_USERNAME, KEY_PASSWORD}, KEY_USERNAME + "=?",
+                new String[] { String.valueOf(username) },
+                null, null, null, null
+        );
+
+        int userIDIndex = cursor.getColumnIndex(KEY_ID);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+
+        int userID = cursor.getInt(userIDIndex);
+
+        cursor.close();
+        return userID;
     }
 
     public int updateUser(User user) {
@@ -165,4 +202,5 @@ public class UserModel extends SQLiteOpenHelper {
             return true;
         }
     }
+
 }

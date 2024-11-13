@@ -21,7 +21,7 @@ public class BatteryPluggedInWorkflow extends Workflow {
     private BatteryApplet app;
 
     public BatteryPluggedInWorkflow(Context context, BatteryApplet batteryApplet, AbstractResponse response) {
-        super(batteryApplet, response);
+        super("batteryPluggedInWorkflow", batteryApplet, response);
         this.context = context;
         this.app = batteryApplet;
         this.response = (NotificationResponse) response;

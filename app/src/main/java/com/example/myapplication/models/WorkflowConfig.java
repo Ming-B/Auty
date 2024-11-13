@@ -1,49 +1,41 @@
 package com.example.myapplication.models;
 
+import java.util.Map;
+
 public class WorkflowConfig {
 
     private String workflowName;
-    private String triggerName;
-    private String responseName;
     private Boolean status;
-    private String response;
 
-    public WorkflowConfig(String workflowName, String triggerName, String responseName, Boolean status, String response) {
+    public WorkflowConfig(String workflowName, Boolean status) {
         this.workflowName = workflowName;
-        this.triggerName = triggerName;
-        this.responseName = responseName;
         this.status = status;
-        this.response = response;
     }
+
+    public WorkflowConfig(){}
 
     public String getWorkflowName() {
         return this.workflowName;
-    }
-
-    public String getTriggerName() {
-        return this.triggerName;
-    }
-
-    public String getResponseName() {
-        return this.responseName;
     }
 
     public Boolean getStatus() {
         return this.status;
     }
 
-    public String getResponse() {
-        return this.response;
+    public void setWorkflowName(String workflowName) {
+        this.workflowName = workflowName;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "WorkflowConfig{" +
                 "workflowName='" + workflowName + '\'' +
-                ", triggerName='" + triggerName + '\'' +
-                ", responseName='" + responseName + '\'' +
                 ", status=" + status +
-                ", response='" + response + '\'' +
                 '}';
     }
+
 }

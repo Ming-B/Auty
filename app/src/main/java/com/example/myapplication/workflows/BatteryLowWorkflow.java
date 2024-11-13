@@ -19,7 +19,7 @@ public class BatteryLowWorkflow extends  Workflow{
     private BatteryApplet app;
 
     public BatteryLowWorkflow(Context context, BatteryApplet batteryApplet, AbstractResponse notificationApplet) {
-        super(batteryApplet, notificationApplet);
+        super("batteryLowWorkflow",batteryApplet, notificationApplet);
         this.context = context;
         this.app = batteryApplet;
         this.response = (NotificationResponse) notificationApplet;

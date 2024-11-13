@@ -25,7 +25,7 @@ public class WifiWorkflow extends Workflow {
     private Context context;
 
     public WifiWorkflow(Context context, WifiApplet wifiApplet, AbstractResponse notificationResponse) {
-        super(wifiApplet, notificationResponse);
+        super("wifiWorkflow", wifiApplet, notificationResponse);
         this.context = context;
         this.response = (NotificationResponse) notificationResponse;
         this.app = wifiApplet;

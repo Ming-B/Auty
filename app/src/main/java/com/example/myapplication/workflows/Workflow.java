@@ -8,19 +8,39 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.applets.Applet;
 import com.example.myapplication.responses.AbstractResponse;
 
+import java.util.ArrayList;
+
 public abstract class Workflow {
-
-    protected AbstractResponse response;
     protected Applet app;
+    protected boolean isActive;
 
-    public Workflow(Applet app, AbstractResponse response) {
+
+    protected String workflowName;
+    protected AbstractResponse response;
+
+    public Workflow(String workflowName, Applet app, AbstractResponse response) {
         this.app = app;
         this.response = response;
-
-    } //this is fine
+        this.workflowName = workflowName;
+        this.isActive = false;
+    }
 
     public abstract void registerReceiver();
     public abstract void handle(@Nullable Intent intent);
 
+    public String[] getConfig() {
+        return new String[] {this.workflowName, this.response.getResponseName()};
+    }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getWorkflowName() {
+        return workflowName;
+    }
 }
