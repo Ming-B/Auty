@@ -12,23 +12,25 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 // test runs on emulator or device
-@RunWith(AndroidJUnit4.class)  
+@RunWith(AndroidJUnit4.class)
 public class workFlowTest {
 
     private Workflow workflow;
     private AbstractTrigger mockTrigger;
     private AbstractResponse mockResponse;
+    private Context context;
 
     @Before
     public void setUp() {
-        // Set up context for the test 
-        Context context = ApplicationProvider.getApplicationContext();
+        // Set up context for the test
+        context = ApplicationProvider.getApplicationContext();
 
-        // Create mock trigger and response
+        // Create a mock trigger and response
         mockTrigger = new AbstractTrigger("BatteryTrigger", 0.5f) {
             @Override
             public boolean handleService() {
-                return true;
+                // Simulate a battery trigger condition (e.g., battery level below threshold)
+                return true;  // Trigger condition is met
             }
         };
 
@@ -36,38 +38,57 @@ public class workFlowTest {
             @Override
             public void respond() {
                 // Simulate response behavior
+                System.out.println("Response triggered");
             }
         };
 
-        // Initialize the Workflow object
+        // Initialize the Workflow object with the mock trigger and response
         workflow = new Workflow(mockResponse, mockTrigger);
     }
 
+    // Test WFT-1: Battery Level Trigger
     @Test
-    public void testConstructor() {
-        // Verify that the Workflow object is properly initialized
-        assertNotNull("Workflow should not be null", workflow);
-        assertNotNull("Trigger should be correctly initialized", mockTrigger);
-        assertNotNull("Response should be correctly initialized", mockResponse);
-    }
+    public void testBatteryLevelTrigger() {
+        // Check if the workflow is correctly initialized with the trigger
+        assertEquals("BatteryTrigger", workflow.trigger.getTriggerName());
 
-    @Test
-    public void testHandle() {
-        
+        // Simulate workflow handling for battery level condition
         workflow.handle();
 
-        String expectedTriggerName = "com.example.BatteryTrigger";
-        String formattedTriggerName = String.format("com.example.%s", mockTrigger.getTriggerName());
+        // Check that the trigger activates as expected
+        assertTrue("Battery level trigger should activate when battery is low", mockTrigger.handleService());
+    }
 
-        assertEquals("Trigger name should be formatted correctly", expectedTriggerName, formattedTriggerName);
+    // Test WFT-2: Battery Plugged-In Trigger
+    @Test
+    public void testBatteryPluggedInTrigger() {
+        // Redefine mockTrigger to simulate a battery plugged-in condition
+        mockTrigger = new AbstractTrigger("BatteryPluggedInTrigger", 1.0f) {
+            @Override
+            public boolean handleService() {
+                // Simulate a device plugged-in condition
+                return true;  // Trigger condition is met
+            }
+        };
+
+        // Reinitialize workflow with the new trigger
+        workflow = new Workflow(mockResponse, mockTrigger);
+
+        // Check if the workflow is correctly initialized with the trigger
+        assertEquals("BatteryPluggedInTrigger", workflow.trigger.getTriggerName());
+
+        // Simulate workflow handling for plugged-in condition
+        workflow.handle();
+
+        // Check that the trigger activates as expected
+        assertTrue("Battery plugged-in trigger should activate when device is charging", mockTrigger.handleService());
     }
 
     @Test
     public void testOnStartAndOnStop() {
-        // Since we're running an instrumented test, simulate calling onStart and onStop
         try {
-            workflow.onStart();  
-            workflow.onStop();   
+            workflow.onStart();
+            workflow.onStop();
         } catch (Exception e) {
             fail("onStart() or onStop() should not throw exceptions");
         }

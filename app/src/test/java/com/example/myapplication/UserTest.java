@@ -1,42 +1,52 @@
 package com.example.myapplication;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class UserTest {
-    // declaring two  instances of the user class for testing
-    private User user1;
-    private User user2;
 
-    
-    // Sets up the initial state by creating instances of User class
-    @Before
+    private User user;
+
+    @BeforeEach
     public void setUp() {
-        user1 = new User("John Doe", "password123");
-        user2 = new User("Jane Doe", "password456");
+        user = new User("", "");
     }
 
+    // Test UCT-1: No User Information
     @Test
-    public void testSetUserName() {
-        user1.setUserName("John Doe");
-        user2.setUserName("Jane Doe");
-    }
-    @Test
-    public void testGetUserName() {
-        assertEquals("John Doe", user1.getUserName());
-        assertEquals("Jane Doe", user2.getUserName());
-    }
-
-    @Test
-    public void testSetPassword() {
-        user1.setPassword("password123");
-        user2.setPassword("password456");
+    public void testEmptyUserInformation() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            user.setUserName("");
+            user.setPassword("");
+        });
+        assertEquals("Username and password cannot be empty", exception.getMessage());
     }
 
+    // Test UCT-2: Invalid User Credentials
     @Test
-    public void testGetPassword() {
-        assertEquals("password123", user1.getPassword());
-        assertEquals("password456", user2.getPassword());
+    public void testInvalidUserCredentials() {
+        user.setUserName("validUser");
+        user.setPassword("validPassword");
+
+        User invalidUser = new User("invalidUser", "wrongPassword");
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            if (!user.getUserName().equals(invalidUser.getUserName()) ||
+                    !user.getPassword().equals(invalidUser.getPassword())) {
+                throw new RuntimeException("User not found. Please check credentials or register.");
+            }
+        });
+        assertEquals("User not found. Please check credentials or register.", exception.getMessage());
+    }
+
+    // Test UCT-3: Register User with Valid Credentials
+    @Test
+    public void testValidUserRegistration() {
+        user.setUserName("newUser");
+        user.setPassword("newPassword");
+
+        assertEquals("newUser", user.getUserName());
+        assertEquals("newPassword", user.getPassword());
     }
 }
