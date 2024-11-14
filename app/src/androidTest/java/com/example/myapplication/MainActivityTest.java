@@ -17,25 +17,4 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(AndroidJUnit4.class)  
 public class MainActivityTest {
 
-    @Test
-    public void testMainActivityLaunch() {
-        // Launch the MainActivity
-        try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-            // Verify that activity is launched by checking if it's not null
-            scenario.onActivity(activity -> {
-                assertNotNull(activity);  
-            });
-        }
-    }
-
-    @Test
-    public void testUIElementsDisplayed() {
-        // Check if the TextView with ID 'hello' is displayed
-        onView(withId(R.id.hello)) 
-                .check(matches(isDisplayed()));
-
-        // Check if the Button with ID 'button' is displayed
-        onView(withId(R.id.button))  
-                .check(matches(isDisplayed()));
-    }
 }

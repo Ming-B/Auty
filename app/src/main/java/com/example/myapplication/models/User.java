@@ -5,8 +5,8 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class User {
 
-    public String username;
-    public String password;
+    private String username;
+    private String password;
 
     public User(String username, String password, String  passwordRepeat) throws Exception {
         this.username = username;
