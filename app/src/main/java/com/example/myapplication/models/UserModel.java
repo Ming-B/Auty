@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class UserModel extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "AUTY1";
     private static final String TABLE_USERS = "users";
     private static final String KEY_ID = "id";

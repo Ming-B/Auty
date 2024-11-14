@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WorkflowModel extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "AUTY1";
     private static final String TABLE_WORKFLOWS = "workflows";
     private static final String KEY_ID = "id";

@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import com.example.myapplication.models.User;
+
 public class UserTest {
     // declaring two  instances of the user class for testing
     private User user1;
@@ -19,13 +21,13 @@ public class UserTest {
 
     @Test
     public void testSetUserName() {
-        user1.setUserName("John Doe");
-        user2.setUserName("Jane Doe");
+        user1.setUsername("John Doe");
+        user2.setUsername("Jane Doe");
     }
     @Test
     public void testGetUserName() {
-        assertEquals("John Doe", user1.getUserName());
-        assertEquals("Jane Doe", user2.getUserName());
+        assertEquals("John Doe", user1.getUsername());
+        assertEquals("Jane Doe", user2.getUsername());
     }
 
     @Test
