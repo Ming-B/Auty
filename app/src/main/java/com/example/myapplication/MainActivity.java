@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.myapplication.applets.BatteryApplet;
 import com.example.myapplication.applets.BluetoothApplet;
 import com.example.myapplication.applets.WifiApplet;
+import com.example.myapplication.models.DatabaseInit;
 import com.example.myapplication.models.User;
 import com.example.myapplication.models.UserModel;
 import com.example.myapplication.models.WorkflowConfig;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     String loggedInUser = null;
     UserModel userModel;
+    DatabaseInit databaseInit;
     WorkflowModel workflowModel;
     ArrayList<Workflow> workflows;
 
@@ -59,14 +61,16 @@ public class MainActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.button_register);
         deleteButton = findViewById(R.id.button_delete);
 
+        databaseInit = new DatabaseInit(this);
+        userModel = new UserModel(databaseInit);
+        workflowModel = new WorkflowModel(databaseInit);
 
-        this.userModel = new UserModel(this);
-        SQLiteDatabase database = this.userModel.getWritableDatabase();
-        Log.d("AUTY", "User database created or opened: " + database.getPath());
+        //        SQLiteDatabase database = databasthis.userModel.getWritableDatabase();
+//        Log.d("AUTY", "User database created or opened: " + database.getPath());
 
-        this.workflowModel = new WorkflowModel(this);
-        SQLiteDatabase wDatabase = this.workflowModel.getWritableDatabase();
-        Log.d("AUTY", "Workflow database created or opened: " + wDatabase.getPath());
+//        this.workflowModel = new WorkflowModel(this);
+//        SQLiteDatabase wDatabase = this.workflowModel.();
+//        Log.d("AUTY", "Workflow database created or opened: " + wDatabase.getPath());
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,18 +94,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         workflows = createWorkflowList();
-//
-//        if (wDb.addWorkflow(workflowConfig)) {
-//            System.out.println("Succesfully added workflow to DB");
-//        } else {
-//            System.out.println("Failed to add workflow to DB");
+
+//        for (Workflow workflow: workflows){
+//            workflow.registerReceiver();
+//            Log.d("AUTY", String.format("Registered: %s", workflow.getWorkflowName() ));
 //        }
+////
+//        for (Workflow workflow: workflows){
+//            WorkflowConfig workflowConfig = new WorkflowConfig(workflow.getWorkflowName(), Boolean.TRUE);
+//            if (workflowModel.addWorkflow(workflowConfig, loggedInUser)) {
+//                System.out.println("Succesfully added workflow to DB");
+//            } else {
+//                System.out.println("Failed to add workflow to DB");
+//            }
 //
+//        }
+
 //        WorkflowConfig obtainedWF = wDb.getWorkflow("batteryWorkflow");
 //        System.out.printf("Obtained WF: %s\n", obtainedWF.toString() );
+
         onStart();
     }
 
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -113,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             addWorkflows(userID, workflows.get(0));
             addWorkflows(userID, workflows.get(1));
             addWorkflows(userID, workflows.get(2));
+            addWorkflows(userID, workflows.get(3));
 
             Map<Workflow, Boolean> userwWorkflows = getWorkflows(userID, workflows);
 

@@ -11,58 +11,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorkflowModel extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
-    private static final String DATABASE_NAME = "AUTY1";
+public class WorkflowModel {
     private static final String TABLE_WORKFLOWS = "workflows";
-    private static final String KEY_ID = "id";
+
+    private static final String KEY_ID = "w_id";
     private static final String KEY_WF_NAME = "workflow_name";
     private static final String KEY_STATUS = "status";
-    private static final String KEY_USER_ID = "user_id";
-//    private static final String KEY_T_NAME = "trigger_name";
-//    private static final String KEY_R_NAME = "response_name";
-//    private static final String KEY_RESPONSE = "response";
+    private static final String KEY_USER_ID = "id";
 
+    private DatabaseInit dbInit;
 
-    public WorkflowModel(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    @Override
-    public  void onCreate(SQLiteDatabase db) {
-        String CREATE_WORKFLOW_TABLE = String.format(
-                "CREATE TABLE %s (" +
-                    "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "%s VARCHAR(255) NOT NULL, " +
-//                    "%s VARCHAR(255) NOT NULL, " +
-//                    "%s VARCHAR(255) NOT NULL, " +
-                    "%s INTEGER, " +
-                    "%s INTEGER, " +
-                    "FOREIGN KEY(%s) REFERENCES %s (%s)" +
-//                    "%s TEXT" +
-                ")"
-//                , TABLE_WORKFLOWS, KEY_ID, KEY_WF_NAME, KEY_T_NAME, KEY_R_NAME, KEY_STATUS, KEY_RESPONSE);
-        , TABLE_WORKFLOWS, KEY_ID, KEY_WF_NAME, KEY_STATUS, KEY_USER_ID, KEY_USER_ID, "users", KEY_USER_ID);
-
-        db.execSQL(CREATE_WORKFLOW_TABLE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String DROP_TABLE = String.format("DROP TABLE IF EXISTS %s", TABLE_WORKFLOWS);
-
-        db.execSQL(DROP_TABLE);
-
-        onCreate(db);
+    public WorkflowModel(DatabaseInit db) {
+        this.dbInit = db;
     }
 
     public boolean addWorkflow(WorkflowConfig workflowConfig, long user_id){
-        SQLiteDatabase db = this.getWritableDatabase();
+
+        SQLiteDatabase db = dbInit.getDB();
 
         String workflow_name = workflowConfig.getWorkflowName();
-//        String trigger_name = workflowConfig.getTriggerName();
-//        String response_name = workflowConfig.getResponseName();
-//        String response = workflowConfig.getResponse();
         Boolean status = workflowConfig.getStatus();
 
         WorkflowConfig obtainedWorkflowConfig = this.getWorkflow(workflow_name);
@@ -75,9 +42,6 @@ public class WorkflowModel extends SQLiteOpenHelper {
             values.put(KEY_STATUS, status);
             values.put(KEY_USER_ID, user_id);
 
-//            values.put(KEY_T_NAME, trigger_name);
-//            values.put(KEY_R_NAME, response_name);
-//            values.put(KEY_RESPONSE, response);
 
             db.insert(TABLE_WORKFLOWS, null, values);
             db.close();
@@ -87,14 +51,8 @@ public class WorkflowModel extends SQLiteOpenHelper {
     }
 
     public WorkflowConfig getWorkflow(String workflowName){
-        SQLiteDatabase db = this.getWritableDatabase();
 
-//        Cursor cursor = db.query(TABLE_WORKFLOWS,
-//                new String[] {KEY_ID, KEY_WF_NAME, KEY_T_NAME, KEY_R_NAME, KEY_STATUS, KEY_RESPONSE},
-//                KEY_WF_NAME + "=?",
-//                new String[] {String.valueOf(workflowName)},
-//                null, null, null, null
-//                );
+        SQLiteDatabase db = this.dbInit.getDB();
 
         Cursor cursor = db.query(TABLE_WORKFLOWS,
                 new String[] {KEY_ID, KEY_WF_NAME, KEY_STATUS},
@@ -133,8 +91,10 @@ public class WorkflowModel extends SQLiteOpenHelper {
 
     @SuppressLint("Range")
     public ArrayList<WorkflowConfig> getWorkflows() {
+
+        SQLiteDatabase db = this.dbInit.getDB();
+
         ArrayList<WorkflowConfig> workflowConfigs = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
 
         String[] columns = {
                 KEY_ID, KEY_WF_NAME, KEY_STATUS, KEY_USER_ID
@@ -152,15 +112,16 @@ public class WorkflowModel extends SQLiteOpenHelper {
         }
 
         cursor.close();
-        db.close();
 
         return workflowConfigs;
     }
 
     @SuppressLint("Range")
     public Map<String, Boolean> getWorkflowByUser(long user_id) {
+
+        SQLiteDatabase db = this.dbInit.getDB();
+
         Map<String, Boolean> workflowConfigMapping = new HashMap<>();
-        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(
                 TABLE_WORKFLOWS,
@@ -179,6 +140,9 @@ public class WorkflowModel extends SQLiteOpenHelper {
                 workflowConfigMapping.put(workflow.getWorkflowName(), workflow.getStatus());
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
+
         return workflowConfigMapping;
     }
 }
