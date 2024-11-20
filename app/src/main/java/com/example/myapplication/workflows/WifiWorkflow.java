@@ -8,10 +8,13 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.applets.WifiApplet;
+import com.example.myapplication.models.WorkflowConfig;
+import com.example.myapplication.models.WorkflowModel;
 import com.example.myapplication.responses.AbstractResponse;
 import com.example.myapplication.responses.NotificationResponse;
 import com.example.myapplication.triggers.WifiTrigger;
@@ -29,16 +32,28 @@ public class WifiWorkflow extends Workflow {
         this.context = context;
         this.response = (NotificationResponse) notificationResponse;
         this.app = wifiApplet;
-
-//        this.registerReceiver();
     }
 
     @Override
-    public void registerReceiver() {
+    public void registerReceiver(WorkflowModel workflowModel, long user_id) {
+        WorkflowConfig workflowConfig = new WorkflowConfig(this.workflowName, Boolean.TRUE);
+        workflowModel.updateWorkflow(workflowConfig, user_id);
+        Log.d("AUTY",String.format("Registered %s workflow", this.workflowName));
+
         this.wifiTrigger = new WifiTrigger(this);
         IntentFilter filter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         this.context.registerReceiver(this.wifiTrigger, filter);
     }
+
+    @Override
+    public void unregisterReceiver(WorkflowModel workflowModel, long user_id) {
+        WorkflowConfig workflowConfig = new WorkflowConfig(this.workflowName, Boolean.FALSE);
+        workflowModel.updateWorkflow(workflowConfig, user_id);
+        Log.d("AUTY",String.format("Unregistered %s workflow", this.workflowName));
+        context.unregisterReceiver(wifiTrigger);
+
+    }
+
 
     @Override
     public void handle(@Nullable Intent intent) {

@@ -101,11 +101,30 @@
                 android:background="?android:attr/listDivider"
                 android:layout_marginVertical="16dp"/>
 
+            <!-- Button for Username and Password -->
+            <Button
+                android:id="@+id/button_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="List notifications" />
+
             <Button
                 android:id="@+id/button_delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Delete" />
+
+            <Button
+                android:id="@+id/button_navigate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open Dynamic List" />
+
+<!--            <Button-->
+<!--                android:id="@+id/show_workflows"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Show workflows" />-->
 
         </LinearLayout>
 

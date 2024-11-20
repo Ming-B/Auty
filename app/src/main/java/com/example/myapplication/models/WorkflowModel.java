@@ -2,10 +2,8 @@ package com.example.myapplication.models;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,5 +142,19 @@ public class WorkflowModel {
         cursor.close();
 
         return workflowConfigMapping;
+    }
+
+    public int updateWorkflow(WorkflowConfig workflowConfig, long user_id) {
+        SQLiteDatabase db = this.dbInit.getDB();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_WF_NAME, workflowConfig.getWorkflowName());
+        values.put(KEY_STATUS, workflowConfig.getStatus());
+
+        int w_id = db.update(TABLE_WORKFLOWS, values, String.format("%s = ? AND %s = ?", KEY_WF_NAME, KEY_USER_ID),
+                new String[] {String.valueOf(workflowConfig.getWorkflowName()), String.valueOf(user_id)});
+
+        db.close();
+        return  w_id;
     }
 }

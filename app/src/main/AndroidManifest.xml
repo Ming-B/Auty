@@ -39,13 +39,27 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+<!--         TODO: remove this-->
+        <!-- String List Activity -->
+        <activity
+            android:name=".StringListActivity"
+            android:exported="false"
+            android:label="Notifications"
+            android:parentActivityName=".MainActivity">
+            <!-- Parent activity meta-data for proper Up navigation -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <!-- Declare the second activity (DynamicListActivity) -->
+        <activity android:name=".DynamicListActivity" />
 
-<!--        <receiver-->
+
+        <!--        <receiver-->
 <!--            android:name=".BatteryStatusReceiver"-->
 <!--            android:exported="false">-->
 <!--            <intent-filter>-->
