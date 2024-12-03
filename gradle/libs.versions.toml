@@ -10,6 +10,8 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 junitJupiter = "5.8.1"
 mockito = "4.0.0"
+monitor = "1.7.1"
+core = "1.6.1"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -22,6 +24,8 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
+core = { group = "androidx.test", name = "core", version.ref = "core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

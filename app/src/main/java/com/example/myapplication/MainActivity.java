@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.button_register);
         deleteButton = findViewById(R.id.button_delete);
 
-        databaseInit = new DatabaseInit(this);
+        databaseInit = new DatabaseInit(this, null);
         userModel = new UserModel(databaseInit);
         workflowModel = new WorkflowModel(databaseInit);
 
